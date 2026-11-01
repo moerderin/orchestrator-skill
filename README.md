@@ -31,6 +31,7 @@ git clone https://github.com/selbereth/orchestrator-skill ~/.claude/skills/orche
 
 - Sorts every message into one of these: new work, a correction to running work, a question, a status request, or a
   change of priority. Each kind is handled its own way.
+- Spawns every sub-agent on Haiku, to keep the work cheap.
 - Writes a self-contained brief for each agent: the goal, paths, rules, deliverable, checks, and a capped report.
 - Runs code-only agents in parallel. Runs agents that share one exclusive resource (a game, a device, a database)
   one at a time, with handoffs.
@@ -52,5 +53,6 @@ git clone https://github.com/selbereth/orchestrator-skill ~/.claude/skills/orche
   work itself, ask it to re-read the skill.
 - Agent results arrive when each agent stops. The orchestrator does not poll them.
 - Agents start cold, so the brief is the only context they get.
-- Standing preferences, such as which model sub-agents use, belong in your memory or CLAUDE.md. The skill checks
-  them before each brief.
+- Sub-agents run on Haiku (`model: "haiku"` on every spawn) unless you ask for another model for a given agent.
+  The orchestrator thread keeps the session's model.
+- Other standing preferences belong in your memory or CLAUDE.md. The skill checks them before each brief.

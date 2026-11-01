@@ -58,8 +58,10 @@ Use `references/agent-prompt-template.md`. Every brief must stand alone, because
 6. Observations, inferences and unknowns kept apart, and a word cap on the final report.
 7. Which checks are live and which are compile-only, named explicitly.
 
-Model: if the user has a standing rule about the model for sub-agents, follow it on every spawn. Otherwise use the
-default. Do not spawn many agents for one small job.
+**Model: sub-agents run on Haiku.** Pass `model: "haiku"` on every `Agent` call, without exception, unless the
+user explicitly asks for a different model for that agent. Do not use the `fork` agent type: a fork always runs on
+the orchestrator's own model and ignores the `model` setting. The orchestrator itself stays on the session's model.
+Do not spawn many agents for one small job.
 
 ## 6. Parallel or serial
 
@@ -97,6 +99,8 @@ default. Do not spawn many agents for one small job.
 - Marking a live task done on a compile check. (Keep "verified live" separate.)
 - Hard-coding values that depend on the user's setup, when the agent can read them live. (Tell agents to read
   live values and record where they came from.)
+- Spawning an agent without `model: "haiku"`, or as a fork. (Every sub-agent runs on Haiku unless the user says
+  otherwise for that agent.)
 - Re-asking the user for something a standing rule already settles. (Check memory first.)
 - Using a streaming monitor for background runs. (One bounded wait at most, or read the log at milestones.)
 - Holding back a finding because it is awkward. (Report it, labelled as an observation or unknown.)

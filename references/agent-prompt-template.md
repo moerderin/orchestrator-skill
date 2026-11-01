@@ -46,6 +46,6 @@ Use these headings:
 - Name the lock or handoff signal when the work shares a resource (a file, a process, a device).
 - Give acceptance checks as observable facts ("the log line `destroyed` appears with N swings"), not as "make it
   work".
-- Tell the agent which model to use only if the user has a standing rule about it. Otherwise leave it to the
-  orchestrator's default.
+- The model is set on the `Agent` call, not in the brief: always `model: "haiku"` unless the user asked for a
+  different model for this agent. Haiku follows a brief literally, so state the goal, paths and checks exactly.
 - Keep the report cap short (about 150-250 words). Long reports cost the orchestrator's context on every turn.
